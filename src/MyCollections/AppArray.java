@@ -186,9 +186,9 @@ public class AppArray<T> implements AppBag<T>{
 	     * @return a string representation of the contents of the bag 
 	     */
 	    public String toString() {
-	        String result = "Bag[ ";
+	        String result = "Bag[\n  ";
 	        for (int index = 0; index < numberOfElements; index++) {
-	            result += bag[index] + " ";
+	            result += bag[index] + "\n  ";
 	        } // end for
 	        result += "]";
 	        return result;
