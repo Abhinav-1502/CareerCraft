@@ -29,6 +29,7 @@ public class UserHandler {
 	  	return resultUser;
 	}
 	
+//  create new user
 	public String postUser(User user) {
 		String message = "";
 		try {
@@ -53,6 +54,7 @@ public class UserHandler {
     	return false;
 	}
 	
+// 	check password match
 	public boolean checkPasswordMatch(String userName, String password) {
 		Document userDoc = collection.find(eq("userName",userName)).first();
 		User user  = docToUser(userDoc);
@@ -62,8 +64,39 @@ public class UserHandler {
 		return false;
 	}
 	
+//  Method to update User, Takes user name and updated user object and returns message
+	public String updateUser(String userName, User user) {
+		Document userDoc = userToDoc(user);
+    	Document filter = new Document("userName", userName);
+    	try{
+    		collection.findOneAndUpdate(filter, new Document("$set",userDoc));
+    		return "User Update Successfull";
+    	}catch(Exception e) {
+    		return e.getMessage();
+    	}
+	}
+	
+//	Method to delete a user from DB, takes user name as input and return
+	public String deleteUser(String userName) {
+    	String message;
+    	try {
+    		Document result = collection.findOneAndDelete(eq("userName",userName));
+    		if(result == null) {
+    			message = "No such recipe found to delete";
+    		}
+    		else {
+    			message = "Delete Successfull";
+    		}
+    	}catch(Exception e){
+    		message = e.getMessage();
+    	}
+    	
+    	return message;
+	}
+	
+	
 	//Helper functions
-		private static Document userToDoc(User user) {
+	private static Document userToDoc(User user) {
 		    Document userDocument = new Document()
 		    		.append("userID", user.getUserID())
 		            .append("firstName", user.getFirstName())
@@ -95,6 +128,10 @@ public class UserHandler {
 		        user.setPassword(userDocument.getString("password"));
 		        user.setSecurityQuestion(userDocument.getString("seqQuestion"));
 		        user.setAnswer(userDocument.getString("seqAnswer"));
+		        user.setApplicationIds((List<Integer>) userDocument.get("JobApplicationIDs"));
+		        user.setResumeDocIds((List<Integer>) userDocument.get("resumeIDs"));
+		        user.setCoverLetterIds((List<Integer>) userDocument.get("CoverLetterIDs"));
+		        user.setScheduleIds((List<Integer>) userDocument.get("JobApplicationIDs"));
 		        // invoke function to create object data from list of IDs - Applications, Schedules, Resumes, CoverLetters
 		    }
 		    return user;

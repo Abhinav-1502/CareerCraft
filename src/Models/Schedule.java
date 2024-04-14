@@ -1,5 +1,6 @@
 package Models;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -98,8 +99,8 @@ public class Schedule {
      *
      * @return The schedule date.
      */
-    public Date getScheduleDate() {
-        return scheduleDate;
+    public String getScheduleDate() {
+        return dateToString(scheduleDate);
     }
 
     /**
@@ -107,8 +108,25 @@ public class Schedule {
      *
      * @param scheduleDate The schedule date to set.
      */
-    public void setScheduleDate(Date scheduleDate) {
-        this.scheduleDate = scheduleDate;
+    public void setScheduleDate(String scheduleDate) {
+        this.scheduleDate = stringToDate(scheduleDate);
+    }
+    
+ // Method to convert String to Date
+    private static Date stringToDate(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        try {
+            return dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // Method to convert Date to String
+    private static String dateToString(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return dateFormat.format(date);
     }
 	
     @Override

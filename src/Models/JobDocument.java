@@ -3,11 +3,16 @@ package Models;
 public class JobDocument {
 	private int documentId;
 	private String documentName;
-	private String fileName;
+	private String bucketId; // Id of the file stored in gridFSBucket;
+	private String documentDesc;
 	
 	public JobDocument() {
 		// Gen random DocumentID number;
 	}
+	public void setDocumentID(int id) {
+		this.documentId = id;
+	}
+	
 	public int getDocumentID() {
 		return this.documentId;
 	}
@@ -20,18 +25,27 @@ public class JobDocument {
         this.documentName = documentName;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getDocumentDesc() {
+        return documentDesc;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setDocumentDesc(String fileName) {
+        this.documentDesc = fileName;
+    }
+    
+    public String getBucketId() {
+    	return this.bucketId;
+    }
+    
+    public void setBucketId(String id) {
+    	this.bucketId = id;
     }
     
     @Override
     public String toString() {
         return
-               "Document Name: " + documentName + "\n" +
-               "File Name: " + fileName;
+               "Document ID:" + documentId +"\n"
+               +"Document Name: " + documentName + "\n" +
+               "Document Description: " + documentDesc+"\n";
     }
 }

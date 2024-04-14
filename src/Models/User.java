@@ -17,19 +17,15 @@ public class User {
 	private String password;
 	private String securityQuestion;
 	private String answer;
+	//Ids
+	private List<Integer> JobApplicationIds;
+	private List<Integer> ScheduleIds;
+	private List<Integer> ResumesIds;
+	private List<Integer> CoverLetterIds;
 	
-	//Application level;
-	private AppBag<JobApplication> JobApplications;
-	private AppBag<Schedule> Schedules;
-	private AppBag<JobDocument> Resumes;
-	private AppBag<JobDocument> CoverLetters;
 	
 	public User() {
 		//Invoke a function where it generates a random userID and sets it
-		JobApplications = new AppArray<>();
-		Resumes = new AppArray<>();
-		CoverLetters = new AppArray<>();
-		Schedules = new AppArray<>();
 	}
 	
 	public User(int userID, String firstName, String lastName, String email, String username, String password, String SecurityQuestion, String answer) {
@@ -148,84 +144,129 @@ public class User {
         return answer;
     }
     
+    public void setApplicationIds(List<Integer> Ids) {
+    	this.JobApplicationIds = Ids;
+    }
+    
+    public List<Integer> getApplicationIds(){
+		return this.JobApplicationIds;
+	}	
+    
     /**
      * Add a job applicationID to user.
      * @param Job application object representing Job application ID
      */
-    public void addJobApplication(JobApplication application) {
-    	JobApplications.add(application);
+    public void addJobApplication(int jobApplicationId) {
+    	JobApplicationIds.add(jobApplicationId);
     }
     
     /**
      * remove a job applicationID from user.
      * @return returns TRUE if removed, or false if failed.
      */
-    public boolean removeJobApplication(JobApplication application) {
-    	return JobApplications.remove(application);
+    public boolean removeJobApplication(Integer jobApplicationId) {
+    	return JobApplicationIds.remove(jobApplicationId);
     }
     
     public String getAllUsersApplications() {
-    	return JobApplications.toString();
+    	if(JobApplicationIds.isEmpty()) {
+    		return "\n"+this.getFirstName()+" didn't upload any Job Applications";
+    	}
+    	return JobApplicationIds.toString();
+    }
+    
+    public void setResumeDocIds(List<Integer> Ids) {
+    	this.ResumesIds = Ids;
     }
     
     /**
      * Add a resume  to user.
      * @param Document object representing resume document
      */
-    public void addResume(JobDocument resume) {
-    	Resumes.add(resume);
+    public void addResume(int resumeId) {
+    	ResumesIds.add(resumeId);
     }
+    
+
+	public List<Integer> getResumeIDs(){
+		return this.ResumesIds;
+	}
     
     /**
      * remove a resume from user.
      * @return returns TRUE if removed, or false if failed.
      */
-    public boolean removeResume(JobDocument resume) {
-    	return Resumes.remove(resume);
+    public boolean removeResume(Integer resumeId) {
+    	return ResumesIds.remove(resumeId);
     }
     
     public String getAllUsersResumes() {
-    	return Resumes.toString();
+    	if(ResumesIds.isEmpty()) {
+    		return "\n"+this.getFirstName()+" didn't upload any resumes";
+    	}
+    	return ResumesIds.toString();
+    }
+    
+    public void setCoverLetterIds(List<Integer> Ids) {
+    	this.CoverLetterIds = Ids;
     }
     
     /**
      * Adds a cover letter to user.
      * @param JobDocument object representing cover letter
      */
-    public void addCoverLetter(JobDocument coverLetter) {
-    	CoverLetters.add(coverLetter);
+    public void addCoverLetter(int coverLetterId) {
+    	CoverLetterIds.add(coverLetterId);
     }
+    
+    public List<Integer> getCoverLetterIDs(){
+		return this.CoverLetterIds;
+	}
     
     /**
      * remove a cover letter from user.
      * @return returns TRUE if removed, or false if failed.
      */
-    public boolean removeCoverLetter(JobDocument coverLetter) {
-    	return CoverLetters.remove(coverLetter);
+    public boolean removeCoverLetter(Integer coverLetterId) {
+    	return CoverLetterIds.remove(coverLetterId);
     }
     
     public String getAllCoverLetters() {
-    	return CoverLetters.toString();
+    	if(CoverLetterIds.isEmpty()) {
+    		return "\n"+this.getFirstName()+" didn't upload any cover letters"; 
+    	}
+    	return CoverLetterIds.toString();
+    }
+    
+    public void setScheduleIds(List<Integer> Ids) {
+    	this.ScheduleIds = Ids;
     }
     
     /**
      * Adds a schedules to user.
      * @param JobDocument object representing cover letter
      */
-    public void addSchedule(Schedule schedule) {
-    	Schedules.add(schedule);
+    public void addSchedule(int scheduleId) {
+    	ScheduleIds.add(scheduleId);
     }
+    
+    public List<Integer> getScheduleIDs(){
+		return this.ScheduleIds;
+	}
     
     /**
      * remove a schedules from user.
      * @return returns TRUE if removed, or false if failed.
      */
-    public boolean removeSchedule(Schedule schedule) {
-    	return Schedules.remove(schedule);
+    public boolean removeSchedule(Integer scheduleId) {
+    	return ScheduleIds.remove(scheduleId);
     }
     
     public String getAllSchedules() {
-    	return Schedules.toString();
+    	if(ScheduleIds.isEmpty()) {
+    		return "\n"+this.getFirstName()+" didn't upload any schedules"; 
+    	}
+    	return ScheduleIds.toString();
     }
 
 	public String getPhone() {
@@ -235,58 +276,6 @@ public class User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
-	public List<Integer> getApplicationIds(){
-		List<Integer> IDs = new ArrayList<>();
-		if(this.JobApplications.isEmpty()) {
-			return IDs;
-		}
-		Object[] JobAppsArr = this.JobApplications.toArray();
-		for(int i=0; i<=JobAppsArr.length; i++) {
-			JobApplication jobApp = (JobApplication) JobAppsArr[i];
-			IDs.add(jobApp.getApplicationID());
-		}
-		return IDs;
-	}	
-	
-	public List<Integer> getScheduleIDs(){
-		List<Integer> IDs = new ArrayList<>();
-		if(this.Schedules.isEmpty()) {
-			return IDs;
-		}
-		Object[] scheduleArr = this.Schedules.toArray();
-		for(int i=0; i<=scheduleArr.length; i++) {
-			Schedule sched = (Schedule) scheduleArr[i];
-			IDs.add(sched.getScheduleID());
-		}
-		return IDs;
-	}
-	
-	public List<Integer> getResumeIDs(){
-		List<Integer> IDs = new ArrayList<>();
-		if(this.Resumes.isEmpty()) {
-			return IDs;
-		}
-		Object[] resumes = this.Resumes.toArray();
-		for(int i=0; i<=resumes.length; i++) {
-			JobDocument jd = (JobDocument) resumes[i];
-			IDs.add(jd.getDocumentID());
-		}
-		return IDs;
-	}
-	
-	public List<Integer> getCoverLetterIDs(){
-		List<Integer> IDs = new ArrayList<>();
-		if(this.CoverLetters.isEmpty()) {
-			return IDs;
-		}
-		Object[] CVs = this.CoverLetters.toArray();
-		for(int i=0; i<=CVs.length; i++) {
-			JobDocument jd = (JobDocument) CVs[i];
-			IDs.add(jd.getDocumentID());
-		}
-		return IDs;
-	}
 	
 	 @Override
 	    public String toString() {
@@ -295,10 +284,10 @@ public class User {
 	        sb.append("Email: ").append(email).append("\n");
 	        sb.append("Phone: ").append(phone).append("\n");
 	        sb.append("Username: ").append(username).append("\n");
-	        sb.append("Job Applications: ").append(JobApplications.toString()).append("\n");
-	        sb.append("Schedules: ").append(Schedules.toString()).append("\n");
-	        sb.append("Resumes: ").append(Resumes.toString()).append("\n");
-	        sb.append("Cover Letters: ").append(CoverLetters.toString()).append("\n");
+	        sb.append("Job Applications: ").append(JobApplicationIds.toString()).append("\n");
+	        sb.append("Schedules: ").append(ScheduleIds.toString()).append("\n");
+	        sb.append("Resumes: ").append(ResumesIds.toString()).append("\n");
+	        sb.append("Cover Letters: ").append(CoverLetterIds.toString()).append("\n");
 
 	        return sb.toString();
 	    }

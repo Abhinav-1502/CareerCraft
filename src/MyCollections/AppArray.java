@@ -1,5 +1,8 @@
 package MyCollections;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class AppArray<T> implements AppBag<T>{
 	
 	 	private final T[] bag;
@@ -57,6 +60,20 @@ public class AppArray<T> implements AppBag<T>{
 	        if (!initialized)
 	             throw new SecurityException("ArrayBag object is not initialized properly.");
 	    }
+	    /**
+	     * Retrieves the element at the specified index in this bag.
+	     * 
+	     * @param index The index of the element to retrieve.
+	     * @return The element at the specified index, or null if the index is out of bounds.
+	     */
+	    public T get(int index) {
+	        if (index >= 0 && index < numberOfElements) {
+	            return bag[index];
+	        } else {
+	            return null;
+	        }
+	    }
+
 	    
 	    /** Retrieves all entries that are in this bag.
 	     * @return A newly allocated array of all the entries in the bag. 
@@ -180,13 +197,23 @@ public class AppArray<T> implements AppBag<T>{
 	        return where;
 	    } // end getIndexOf
 	    
+	 // Other methods and variables...
+
+	    /** Sorts the elements in the bag using the specified comparator. */
+	    public void sort(Comparator<? super T> comparator) {
+	        // Ensure the bag is initialized
+	        checkInitialization();
+	        
+	        // Sort the elements using the specified comparator
+	        Arrays.sort(bag, 0, numberOfElements, comparator);
+	    }
 	    
 	    /** Override the toString() method so that we get a more useful display of
 	     *  the contents in the bag.
 	     * @return a string representation of the contents of the bag 
 	     */
 	    public String toString() {
-	        String result = "Bag[\n  ";
+	        String result = "Bag[\n";
 	        for (int index = 0; index < numberOfElements; index++) {
 	            result += bag[index] + "\n  ";
 	        } // end for

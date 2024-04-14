@@ -1,7 +1,10 @@
 package Models;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import MyCollections.AppArray;
 import MyCollections.AppBag;
@@ -12,11 +15,13 @@ public class JobApplication {
 	private String jobTitle;
 	private Date appliedDate;
 	private String applicationStatus;
-	private AppBag<Schedule> schedules;
-	private AppBag<JobDocument> attachedDocs;
+	private List<Integer> scheduleIds;
+	private List<Integer> attachedDocIds;
 		
 	//Creates a job application instance with random applicationID which is not equal to any existing IDs.
 	public JobApplication() {
+		scheduleIds = new ArrayList<>();
+		attachedDocIds = new ArrayList<>();
 		// invoke a function which returns random number for ID, which is not already in DB
 	}
 	
@@ -27,8 +32,6 @@ public class JobApplication {
 		this.jobTitle = jobTitle;
 		this.appliedDate = appliedDate;
 		this.applicationStatus= applicationStatus;
-		schedules = new AppArray<>();
-		attachedDocs = new AppArray<>();
 	}
 	
 	public int getApplicationID() {
@@ -56,8 +59,8 @@ public class JobApplication {
 	/**Sets the applied date for the job application instance
 	 * @param Date object representing the applied date
 	 * */
-	public void setAppliedDate(Date appliedDate) {
-		this.appliedDate = appliedDate;
+	public void setAppliedDate(String appliedDate) {
+		this.appliedDate = stringToDate(appliedDate);
 	}
 	
 	/**Sets the applicationStatus for the job application instance
@@ -72,32 +75,32 @@ public class JobApplication {
 	 * @param Schedule object representing the schedule, it can be an interview, follow up or even an email
 	 * @return True if adding was successful, and false if not
 	 * */
-	public boolean addSchedule(Schedule schedule) {
-		return schedules.add(schedule);
+	public void addSchedule(Integer scheduleId) {
+		this.scheduleIds.add(scheduleId);
 	}
 	
 	/**removes the interview from the job application instance
 	 * @param Schedule object representing the schedule
 	 * @return True if removing was successful, and false if not
 	 * */
-	public boolean removeSchedule(Schedule schedule) {
-		return schedules.remove(schedule);
+	public boolean removeSchedule(Integer scheduleId) {
+		return scheduleIds.remove(scheduleId);
 	}
 	
 	/**Adds the document to for the job application instance
 	 * @param JobDocument object representing the document
 	 * @return True if adding was successful, and false if not
 	 * */
-	public void addDocument(JobDocument doc) {
-		attachedDocs.add(doc);
+	public void addDocument(Integer docId) {
+		attachedDocIds.add(docId);
 	}
 	
 	/**removes the document from the job application instance
 	 * @param JobDocument object representing the document
 	 * @return True if adding was successful, and false if not
 	 * */
-	public void remove(JobDocument doc) {
-		attachedDocs.add(doc);
+	public boolean remove(Integer docId) {
+		return attachedDocIds.remove(docId);
 	}
 	
 	/**Returns the company name from the job application instance
@@ -117,8 +120,8 @@ public class JobApplication {
 	/**Returns the applied date of the job application instance
 	 * @return Date representing the applied date
 	 * */
-	public Date getAppliedDate() {
-		return appliedDate;
+	public String getAppliedDate() {
+		return dateToString(appliedDate);
 	}
 	
 	/**Returns the application status of the job application instance
@@ -132,8 +135,43 @@ public class JobApplication {
 	 * @return String representing all the schedules interview
 	 * */
 	public String getAllSchedules() {
-		return schedules.toString();
+		return scheduleIds.toString();
 	}
+	
+	
+	
+	public void setScheduleIds(List<Integer> scheduleIDs) {
+		this.scheduleIds = scheduleIDs;
+	}
+	
+	public void setAttachedDocsIds(List<Integer> docIds) {
+		this.attachedDocIds = docIds;
+	}
+	
+	public List<Integer> getScheduleIDs(){
+		return scheduleIds;
+	}
+	
+	public List<Integer> getAttachedDocsIDs(){
+		return attachedDocIds;
+	}
+	
+	// Method to convert String to Date
+    private static Date stringToDate(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        try {
+            return dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // Method to convert Date to String
+    private static String dateToString(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return dateFormat.format(date);
+    }
 
 	@Override
     public String toString() {
@@ -141,6 +179,7 @@ public class JobApplication {
         String formattedDate = dateFormat.format(appliedDate);
 
         StringBuilder sb = new StringBuilder();
+        sb.append("Application ID: ").append(applicationID).append("\n");
         sb.append("Company Name: ").append(companyName).append("\n");
         sb.append("Job Title: ").append(jobTitle).append("\n");
         sb.append("Applied Date: ").append(formattedDate).append("\n");
@@ -148,11 +187,11 @@ public class JobApplication {
 
         // Append schedules
         sb.append("Schedules:\n");
-        sb.append(schedules.toString()).append("\n");
+        sb.append(scheduleIds.toString()).append("\n");
 
         // Append attached documents
         sb.append("Attached Documents:\n");
-        sb.append(attachedDocs.toString());
+        sb.append(attachedDocIds.toString());
 
         return sb.toString();
     }

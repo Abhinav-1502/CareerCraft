@@ -9,6 +9,7 @@ import Models.User;
 
 public class LoginPage {
 	
+	
 	static Scanner inp = new Scanner(System.in);
 	private static MongoDatabase database;
 	public LoginPage(MongoDatabase database){
@@ -29,13 +30,13 @@ public class LoginPage {
 			returnToken = loginPrompt();
 			if(returnToken == null) {
 				throw new Error("Error while fetching user");
-				
 			}else if(returnToken instanceof User) {
-				System.out.println(returnToken);
+				User loggedInUser = (User) returnToken;
+				System.out.println("\nLoggedIn User: "+ loggedInUser.getUsername());
 				return returnToken;
 			}else if(returnToken instanceof String){
 				System.out.println(returnToken);
-				start();
+				return start();
 			}
 		}
 		else if(userCmd ==2) {
@@ -62,7 +63,7 @@ public class LoginPage {
 		userName = inp.next();
 		System.out.println("\nEnter password:");
 		password = inp.next();
-		System.out.println("Username: "+userName+"\nPassword: "+password);
+		System.out.println("\nUsername: "+userName+"\nPassword: "+password);
 		return loginUser(userName, password);
 	}
 
@@ -111,7 +112,6 @@ public class LoginPage {
 		UserHandler uh = new UserHandler(database);
 		System.out.println("Given user information:"+createUser);
 		String postMessage = uh.postUser(createUser);
-		
 		
 		
 		if(postMessage == "Account Created Successfully"){

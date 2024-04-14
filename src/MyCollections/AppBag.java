@@ -1,5 +1,7 @@
 package MyCollections;
 
+import java.util.Comparator;
+
 public interface AppBag<T> {
 	 /** Gets the current number of entries in this bag.
      * @return The integer number of entries currently in the bag. 
@@ -16,7 +18,14 @@ public interface AppBag<T> {
      * @return True if the addition is successful, or false if not. 
      */
     public boolean add(T newEntry);
-
+    
+    /**
+     * Retrieves the element at the specified index in this bag.
+     * 
+     * @param index The index of the element to retrieve.
+     * @return The element at the specified index, or null if the index is out of bounds.
+     */
+    public T get(int index);
     /** Removes one unspecified entry from this bag, if possible.
      * @return Either the removed entry, if the removal was successful, or null. 
      */
@@ -36,7 +45,7 @@ public interface AppBag<T> {
      * @return The number of times anEntry appears in the bag. 
      */
     public int getFrequencyOf(T anEntry);
-
+    
     /** Tests whether this bag contains a given entry.
      * @param anEntry The entry to locate.
      * @return True if the bag contains anEntry, or false if not. 
