@@ -23,7 +23,7 @@ public class ScheduleHandler {
 	 * @param ScheduleID in string representing schedule
 	 * @return Schedule model object representing the schedule
 	 * **/
-	public Schedule getSchedule(String scheduleID) {
+	public Schedule getSchedule(int scheduleID) {
 		Document schedDoc = collection.find(eq("scheduleID", scheduleID)).first();
 		if(schedDoc== null) {
 			return null;
@@ -32,10 +32,10 @@ public class ScheduleHandler {
 	  	return resultSchedule;
 	}
 	
-	public String deleteSchedule(String scheduleID) {
+	public String deleteSchedule(int id) {
     	String message;
     	try {
-    		Document result = collection.findOneAndDelete(eq("scheduleID",scheduleID));
+    		Document result = collection.findOneAndDelete(eq("scheduleID",id));
     		if(result == null) {
     			message = "No such schedule found to delete";
     		}

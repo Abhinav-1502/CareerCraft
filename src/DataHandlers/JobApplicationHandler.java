@@ -65,7 +65,7 @@ public class JobApplicationHandler {
 	 * @param job Application model object representing job applicaiton
 	 * @return String representing result of updating
 	 * **/
-	public String updateApplication(String jobId, JobApplication job) {
+	public String updateApplication(int jobId, JobApplication job) {
 		Document jobDoc = jobToDoc(job);
     	Document filter = new Document("jobApplicationID", jobId);
     	try{
@@ -81,7 +81,7 @@ public class JobApplicationHandler {
 	 * @param job application ID in string representing job applicaiton
 	 * @return String representing result of updating
 	 * **/
-	public String deleteJobApplication(String jobId) {
+	public String deleteJobApplication(int jobId) {
     	String message;
     	try {
     		Document result = collection.findOneAndDelete(eq("jobApplicationID",jobId));

@@ -7,7 +7,7 @@ import java.util.Date;
 import MyCollections.AppArray;
 import MyCollections.AppBag;
 
-public class Schedule {
+public class Schedule implements Comparable<Schedule>{
 	private int scheduleID;
 	private String scheduleName;
 	private String scheduleType;
@@ -70,11 +70,7 @@ public class Schedule {
      * @param scheduleType The schedule type to set.
      */
     public void setScheduleType(String scheduleType) {
-    	if(schTypes.contains(scheduleType)) {
     	this.scheduleType = scheduleType;
-        }else {
-        	throw(new Error("Invalid scheduleType"));
-        }
     }
 
     /**
@@ -114,7 +110,7 @@ public class Schedule {
     
  // Method to convert String to Date
     private static Date stringToDate(String dateString) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             return dateFormat.parse(dateString);
         } catch (ParseException e) {
@@ -125,7 +121,7 @@ public class Schedule {
 
     // Method to convert Date to String
     private static String dateToString(Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(date);
     }
 	
@@ -138,5 +134,10 @@ public class Schedule {
                "Schedule Type: " + scheduleType + "\n" +
                "Schedule Description: " + scheduleDescription + "\n" +
                "Schedule Date: " + formattedDate;
+    }
+    
+    @Override
+    public int compareTo(Schedule other) {
+        return this.scheduleDate.compareTo(other.scheduleDate);
     }
 }

@@ -157,6 +157,7 @@ public class User {
      * @param Job application object representing Job application ID
      */
     public void addJobApplication(int jobApplicationId) {
+    	System.out.println("Called me!!");
     	JobApplicationIds.add(jobApplicationId);
     }
     

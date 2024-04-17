@@ -33,4 +33,18 @@ public interface MyQueue<T> {
      * @return true if the queue is empty, false otherwise
      */
     public boolean isEmpty();
+    
+    /**
+     * Traverses through the elements in the priority queue and prints them out.
+     *
+     * @param priorityQueue the priority queue to traverse
+     * @param <T> the type of elements stored in the priority queue
+     */
+    public void traverse();
+    
+    /** Retrieves all entries that are in this bag.
+     * @return A newly allocated array of all the entries in the bag.
+     * Note: If the bag is empty, the returned array is empty. 
+     */
+    public T[] toArray();
 }

@@ -28,7 +28,7 @@ public class DocumentHandler {
 	 * @return Job Document model object representing documentData
 	 * **/
 	public JobDocument getDocument(int documentID) {
-		Document jobDoc = collection.find(eq("documentId", documentID)).first();
+		Document jobDoc    = collection.find(eq("documentId", documentID)).first();
 		if(jobDoc== null) {
 			return null;
 		}

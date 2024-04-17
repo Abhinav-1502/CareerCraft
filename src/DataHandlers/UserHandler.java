@@ -131,7 +131,7 @@ public class UserHandler {
 		        user.setApplicationIds((List<Integer>) userDocument.get("JobApplicationIDs"));
 		        user.setResumeDocIds((List<Integer>) userDocument.get("resumeIDs"));
 		        user.setCoverLetterIds((List<Integer>) userDocument.get("CoverLetterIDs"));
-		        user.setScheduleIds((List<Integer>) userDocument.get("JobApplicationIDs"));
+		        user.setScheduleIds((List<Integer>) userDocument.get("scheduleIDs"));
 		        // invoke function to create object data from list of IDs - Applications, Schedules, Resumes, CoverLetters
 		    }
 		    return user;

@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import com.mongodb.client.MongoClients;
@@ -12,9 +13,13 @@ import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSBuckets;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import com.mongodb.client.gridfs.model.GridFSUploadOptions;
+import com.mongodb.client.model.Filters;
 
+import java.awt.Desktop;
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 public class MongoGridHandler {
 	private static MongoDatabase sessionDatabase;
 	private static GridFSBucket gridFSBucket;
@@ -102,4 +107,37 @@ public class MongoGridHandler {
             e.printStackTrace();
         }
     }
+    
+
+ // Method to open a file from GridFS
+    public void openFile(String fileId) {
+        try {
+        	// Create a query to find the file by its ObjectId
+            Bson filter = Filters.eq("_id", new ObjectId(fileId));
+            
+            // Find the file in GridFS
+            GridFSFile file = gridFSBucket.find(filter).first();
+            if (file != null) {
+                // Open download stream for the file
+                InputStream inputStream = gridFSBucket.openDownloadStream(file.getObjectId());
+
+                // Create a temporary file path
+                Path tempFilePath = Files.createTempFile("gridfs_", file.getFilename());
+
+                // Write the file content to the temporary file
+                Files.copy(inputStream, tempFilePath, StandardCopyOption.REPLACE_EXISTING);
+                inputStream.close();
+
+                // Open the temporary file using the default application
+                Desktop.getDesktop().open(tempFilePath.toFile());
+            } else {
+                System.out.println("File not found in GridFS: " + fileId);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+    
 }

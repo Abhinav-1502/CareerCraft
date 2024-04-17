@@ -22,6 +22,7 @@ import MyCollections.AppArray;
 import MyCollections.AppBag;
 import Pages.DashboardPage;
 import Pages.LoginPage;
+import Pages.SchedulesPage;
 import javafx.application.Application;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -31,21 +32,10 @@ public class Server extends Application{
 	private MongoDatabase sessionDatabaseToken;
 	private User sessionUser;
 	
-	public void startApp() {
-		appToken = new DbConnection();
-		sessionDatabaseToken = appToken.getDatabase();
-		
-		fileChooser();
-		
-		appToken.endConnection();
-	}
-	
 	private void handleFiles() {
 		// TODO Auto-generated method stub
 		MongoGridHandler fileHandle = new MongoGridHandler(sessionDatabaseToken);
-		
-		ObjectId obj = fileHandle.uploadFile("D:\\backup\\documents\\Docs\\Resume_sample.pdf","Resume_2");
-		System.out.println(obj);
+	
 	}
 
 	private void authenticateUser() {
@@ -103,7 +93,7 @@ public class Server extends Application{
 		appToken = new DbConnection();
 		sessionDatabaseToken = appToken.getDatabase();
 		
-		authenticateUser();
+		handleFiles();
 		
 		appToken.endConnection();
 		
