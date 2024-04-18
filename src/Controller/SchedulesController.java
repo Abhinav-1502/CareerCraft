@@ -21,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -156,6 +157,93 @@ public class SchedulesController {
     	}
     }
 
+	 @FXML
+	 void openAccounts(MouseEvent event) {
+		 accountsTab.getScene().getWindow().hide();
+	    	Stage stage = new Stage();
+	    	try {
+	    		FXMLLoader fxmlloader = new FXMLLoader();
+	    		fxmlloader.setLocation(getClass().getResource("/FXML/Account.fxml"));
+	    		
+	    		Parent root = fxmlloader.load();
+	    		
+	    		//Load Controller and initialize sessionUser and MongoDB database
+	    		AccountController accCont = fxmlloader.getController();
+	    		accCont.start(sessionUser, sessionDb);
+	    		Scene scene = new Scene(root);
+	    		
+	    		stage.setScene(scene);
+	    		stage.show();
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+	    }
+	
+	    @FXML
+	    void openApplications(MouseEvent event) {
+	    	accountsTab.getScene().getWindow().hide();
+	    	Stage stage = new Stage();
+	    	try {
+	    		FXMLLoader fxmlloader = new FXMLLoader();
+	    		fxmlloader.setLocation(getClass().getResource("/FXML/Applications.fxml"));
+	    		
+	    		Parent root = fxmlloader.load();
+	    		
+	    		//Load Controller and initialize sessionUser and MongoDB database
+	    		ApplicationsController appCont = fxmlloader.getController();
+	    		appCont.start(sessionUser, sessionDb);
+	    		Scene scene = new Scene(root);
+	    		
+	    		stage.setScene(scene);
+	    		stage.show();
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+	    }
+	
+	    @FXML
+	    void openDashboard(MouseEvent event) {
+	    	dashboardTab.getScene().getWindow().hide();
+	    	Stage stage = new Stage();
+	    	try {
+				FXMLLoader fxmlloader = new FXMLLoader();
+				fxmlloader.setLocation(getClass().getResource("/FXML/Dashboard.fxml"));
+				
+				Parent root = fxmlloader.load();
+				
+				DashboardController dashboardController = fxmlloader.getController();
+				dashboardController.initialize(sessionUser, sessionDb);
+				
+	    		Scene scene = new Scene(root);
+	    		
+	    		stage.setScene(scene);
+	    		stage.show();
+	    	}catch(Exception e) {
+	    		e.printStackTrace();
+	    	}
+	    }
+	
+	    @FXML
+	    void openDocuments(MouseEvent event) {
+	    	documentsTab.getScene().getWindow().hide();
+	    	Stage stage = new Stage();
+	    	try {
+	    		FXMLLoader fxmlloader = new FXMLLoader();
+	    		fxmlloader.setLocation(getClass().getResource("/FXML/Documents.fxml"));
+	    		
+	    		Parent root = fxmlloader.load();
+	    		
+	    		//Load Controller and initialize sessionUser and MongoDB database
+	    		DocumentController docController = fxmlloader.getController();
+	    		docController.start(sessionUser, sessionDb);
+	    		Scene scene = new Scene(root);
+	    		
+	    		stage.setScene(scene);
+	    		stage.show();
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+	    }
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {

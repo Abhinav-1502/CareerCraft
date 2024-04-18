@@ -14,8 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="596.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SchedulesController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588.0" prefWidth="1078.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SchedulesController">
    <children>
       <BorderPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -47,7 +46,7 @@
                                     <Image url="@../assets/menu_account_icon.jpg" />
                                  </image>
                               </ImageView>
-                              <Label id="account_applications_tab" fx:id="applicationsTab" prefHeight="34.0" prefWidth="154.0" text="Applications" textFill="WHITE">
+                              <Label id="account_applications_tab" fx:id="applicationsTab" onMouseClicked="#openApplications" prefHeight="34.0" prefWidth="154.0" text="Applications" textFill="WHITE">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -64,7 +63,7 @@
                                     <Image url="@../assets/menu_account_icon.jpg" />
                                  </image>
                               </ImageView>
-                              <Label id="account_schedules_tab" fx:id="dashboardTab" prefHeight="34.0" prefWidth="154.0" text="Dashboard" textFill="WHITE">
+                              <Label id="account_schedules_tab" fx:id="dashboardTab" onMouseClicked="#openDashboard" prefHeight="34.0" prefWidth="154.0" text="Dashboard" textFill="WHITE">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -81,7 +80,7 @@
                                     <Image url="@../assets/menu_account_icon.jpg" />
                                  </image>
                               </ImageView>
-                              <Label id="account_documents_tab" fx:id="documentsTab" prefHeight="34.0" prefWidth="154.0" text="Documents" textFill="WHITE">
+                              <Label id="account_documents_tab" fx:id="documentsTab" onMouseClicked="#openDocuments" prefHeight="34.0" prefWidth="154.0" text="Documents" textFill="WHITE">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -98,7 +97,7 @@
                                     <Image url="@../assets/menu_account_icon.jpg" />
                                  </image>
                               </ImageView>
-                              <Label id="account_account_tab" fx:id="accountsTab" prefHeight="34.0" prefWidth="154.0" text="Account" textFill="WHITE">
+                              <Label id="account_account_tab" fx:id="accountsTab" onMouseClicked="#openAccounts" prefHeight="34.0" prefWidth="154.0" text="Account" textFill="WHITE">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

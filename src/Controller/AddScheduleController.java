@@ -7,6 +7,7 @@ package Controller;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
@@ -94,7 +95,8 @@ public class AddScheduleController {
     }
 
     private void addData() {
-		newSchedule.setScheduleID(sessionUser.getScheduleIDs().size()+301);
+    	Random rand = new Random();
+		newSchedule.setScheduleID(rand.nextInt(100)+sessionUser.getScheduleIDs().size()+301);
 		newSchedule.setScheduleName(ScheduleName.getText());
 		newSchedule.setScheduleType( scheduleType.getSelectionModel().getSelectedItem().toString());
 		newSchedule.setScheduleDescription(scheduleDescTF.getText());

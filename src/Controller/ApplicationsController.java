@@ -89,11 +89,13 @@ public class ApplicationsController {
     	List<Integer> applicationIds = sessionUser.getApplicationIds();
     	jobs = new AppArray<>();
     	jobHandler = new JobApplicationHandler(database);
-    	for(int i=0; i<applicationIds.size(); i++) {
-    		int jobId = applicationIds.get(i);
-    		jobs.add(jobHandler.getJobApplication(jobId));
+    	if(!applicationIds.isEmpty()) {
+    		for(int i=0; i<applicationIds.size(); i++) {
+        		int jobId = applicationIds.get(i);
+        		jobs.add(jobHandler.getJobApplication(jobId));
+        	}
+        	listApplications(jobs);
     	}
-    	listApplications(jobs);
     }
     
     @FXML
@@ -183,7 +185,6 @@ public class ApplicationsController {
 				AnchorPane anchorPane = fxmlloader.load();
 				
 				JobCompController jobComp = fxmlloader.getController();
-				System.out.println(jobs.get(i));
 				jobComp.setData(jobs.get(i), deleteJob, openJob);
 				
 				row ++;
@@ -241,12 +242,46 @@ public class ApplicationsController {
 
     @FXML
     void openSchedules(MouseEvent event) {
-
+    	schedules_tab.getScene().getWindow().hide();
+    	Stage stage = new Stage();
+    	try {
+    		FXMLLoader fxmlloader = new FXMLLoader();
+    		fxmlloader.setLocation(getClass().getResource("/FXML/Schedule.fxml"));
+    		
+    		Parent root = fxmlloader.load();
+    		
+    		//Load Controller and initialize sessionUser and MongoDB database
+    		SchedulesController schedCont = fxmlloader.getController();
+    		schedCont.start(sessionUser, database);
+    		Scene scene = new Scene(root);
+    		
+    		stage.setScene(scene);
+    		stage.show();
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
     }
     
     @FXML
     void openAccounts(MouseEvent event) {
-    	
+    	account_tab.getScene().getWindow().hide();
+    	Stage stage = new Stage();
+    	try {
+    		FXMLLoader fxmlloader = new FXMLLoader();
+    		fxmlloader.setLocation(getClass().getResource("/FXML/Account.fxml"));
+    		
+    		Parent root = fxmlloader.load();
+    		
+    		//Load Controller and initialize sessionUser and MongoDB database
+    		AccountController accCont = fxmlloader.getController();
+    		accCont.start(sessionUser, database);
+    		Scene scene = new Scene(root);
+    		
+    		stage.setScene(scene);
+    		stage.show();
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

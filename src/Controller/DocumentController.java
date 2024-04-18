@@ -87,7 +87,24 @@ public class DocumentController {
 
     @FXML
     void openAccount(MouseEvent event) {
-
+    	account_tab.getScene().getWindow().hide();
+    	Stage stage = new Stage();
+    	try {
+    		FXMLLoader fxmlloader = new FXMLLoader();
+    		fxmlloader.setLocation(getClass().getResource("/FXML/Account.fxml"));
+    		
+    		Parent root = fxmlloader.load();
+    		
+    		//Load Controller and initialize sessionUser and MongoDB database
+    		AccountController accCont = fxmlloader.getController();
+    		accCont.start(sessionUser, sessionDb);
+    		Scene scene = new Scene(root);
+    		
+    		stage.setScene(scene);
+    		stage.show();
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
     }
     	
     @FXML
@@ -118,7 +135,7 @@ public class DocumentController {
     	Stage stage = new Stage();
     	try {
 			FXMLLoader fxmlloader = new FXMLLoader();
-			fxmlloader.setLocation(getClass().getResource("/fxml/Dashboard.fxml"));
+			fxmlloader.setLocation(getClass().getResource("/FXML/Dashboard.fxml"));
 			
 			Parent root = fxmlloader.load();
 			
@@ -136,7 +153,24 @@ public class DocumentController {
 
     @FXML
     void openSchedules(MouseEvent event) {
-    	
+    	schedules_tab.getScene().getWindow().hide();
+    	Stage stage = new Stage();
+    	try {
+    		FXMLLoader fxmlloader = new FXMLLoader();
+    		fxmlloader.setLocation(getClass().getResource("/FXML/Schedule.fxml"));
+    		
+    		Parent root = fxmlloader.load();
+    		
+    		//Load Controller and initialize sessionUser and MongoDB database
+    		SchedulesController schedCont = fxmlloader.getController();
+    		schedCont.start(sessionUser, sessionDb);
+    		Scene scene = new Scene(root);
+    		
+    		stage.setScene(scene);
+    		stage.show();
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
     }
     
     public void start(User user, MongoDatabase database) {
@@ -193,7 +227,7 @@ public class DocumentController {
 					cvRow = 0;
 					cvCol++;
 				}
-				CoverLettersGrid.add(anchorPane, cvCol, cvRow++);
+				CoverLettersGrid.add(anchorPane, cvCol, ++cvRow);
     		}
     	}catch(IOException e) {
     		e.printStackTrace();
@@ -209,8 +243,6 @@ public class DocumentController {
     		JobDocument doc = docHandler.getDocument(resumeIds.get(i));
     		userResumes.add(doc);
     	}
-    	
-    	
     	if(userResumes.getCurrentSize()>0) {
     		opener = new openFIleListener() {
 				@Override

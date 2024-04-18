@@ -26,6 +26,10 @@ public class User {
 	
 	public User() {
 		//Invoke a function where it generates a random userID and sets it
+		JobApplicationIds = new ArrayList<>();
+		ScheduleIds= new ArrayList<>();
+		ResumesIds= new ArrayList<>();
+		CoverLetterIds= new ArrayList<>();
 	}
 	
 	public User(int userID, String firstName, String lastName, String email, String username, String password, String SecurityQuestion, String answer) {
@@ -285,10 +289,10 @@ public class User {
 	        sb.append("Email: ").append(email).append("\n");
 	        sb.append("Phone: ").append(phone).append("\n");
 	        sb.append("Username: ").append(username).append("\n");
-	        sb.append("Job Applications: ").append(JobApplicationIds.toString()).append("\n");
-	        sb.append("Schedules: ").append(ScheduleIds.toString()).append("\n");
-	        sb.append("Resumes: ").append(ResumesIds.toString()).append("\n");
-	        sb.append("Cover Letters: ").append(CoverLetterIds.toString()).append("\n");
+	        sb.append("Job Applications: ").append(JobApplicationIds).append("\n");
+	        sb.append("Schedules: ").append(ScheduleIds).append("\n");
+	        sb.append("Resumes: ").append(ResumesIds).append("\n");
+	        sb.append("Cover Letters: ").append(CoverLetterIds).append("\n");
 
 	        return sb.toString();
 	    }

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import com.mongodb.client.MongoDatabase;
@@ -126,7 +127,8 @@ public class AddApplicationController {
     
     private JobApplication getJobData() {
 		JobApplication job = new JobApplication();
-		job.setApplicationID(sessionUser.getApplicationIds().size()+1001);
+		Random rand = new Random();
+		job.setApplicationID(rand.nextInt(100)+sessionUser.getApplicationIds().size()+1001);
 		job.setCompanyName(companyNameTF.getText());
 		job.setJobTitle(jobTitleTF.getText());
 		job.setAppliedDate(getFormattedDate());
@@ -145,6 +147,8 @@ public class AddApplicationController {
 
 	@FXML
     void updateUserDocs(MouseEvent event) {
+		attachedDocCB.getItems().clear();
+		docDetails.clear();
 		List<Integer> userDocs = sessionUser.getResumeIDs();
 		userDocs.addAll(sessionUser.getCoverLetterIDs());
 		for(int i =0; i<userDocs.size(); i++) {

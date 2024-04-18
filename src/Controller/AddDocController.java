@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
@@ -124,8 +125,8 @@ public class AddDocController {
 		// TODO Auto-generated method stub
 		boolean checkRet = true;
 		
-		
-		int docId = sessionUser.getCoverLetterIDs().size() + sessionUser.getResumeIDs().size() + 401;
+		Random rand = new Random();
+		int docId = rand.nextInt(100)+sessionUser.getCoverLetterIDs().size()*sessionUser.getResumeIDs().size() + 401;
 		doc.setDocumentID(docId);
 		if(documentNameTF.getText() == "") {
 			CommonMethods.showAlert("Enter all the fields");
@@ -154,12 +155,13 @@ public class AddDocController {
 
 	@FXML
     void handleAddFile(ActionEvent event) {
+		uploadingLabel.setText("Adding File...");
     	String url = fileChooser();
     	if(documentNameTF.getText() == "") {
     		CommonMethods.showAlert("Enter Document Name before adding file");
     	}else {
     		
-    		uploadingLabel.setVisible(true);
+    		
     		ObjectId buckObj = gridHandler.uploadFile(url, documentNameTF.getText());
     		bucketId = buckObj.toString();
     		uploadingLabel.setText("File Uploaded");
@@ -188,7 +190,7 @@ public class AddDocController {
         assert documentNameTF != null : "fx:id=\"documentNameTF\" was not injected: check your FXML file 'Document_dialogbox.fxml'.";
         assert resumeRadio != null : "fx:id=\"resumeRadio\" was not injected: check your FXML file 'Document_dialogbox.fxml'.";
         assert submitBtn != null : "fx:id=\"submitBtn\" was not injected: check your FXML file 'Document_dialogbox.fxml'.";
-        uploadingLabel.setVisible(false);
+        uploadingLabel.setText("");
     }
 
 }
